@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <script
+      src="https://kit.fontawesome.com/e6ce39d005.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main_container">
+      <h1>YAPILACAKLAR LİSTESİ</h1>
+
+      <div class="wrapper">
+        <div id="sol_kart">
+          <form action="">
+            <input
+              type="text"
+              id="txtYapilacaklar"
+              placeholder="lütfen yapılacak işi giriniz"
+            />
+          </form>
+          <h3>Yapılacaklar</h3>
+          <ul id="listeyapilacaklar"></ul>
+        </div>
+
+        <div class="sag_kart">
+          <form action="" id="form_yapılacaklar">
+            <input
+              type="button"
+              name=""
+              id="btn_ekle"
+              value="Yapılacaklar Listesine Ekle"
+              onclick="listeyeEkle();"
+            />
+          </form>
+          <h3>Tamamlananlar</h3>
+          <ul id="listeTamamlananlar"></ul>
+        </div>
+      </div>
+      <h1 id="sonuc"></h1>
+    </div>
+
+    <script>
+      var girilen, secilen;
+      var eklenen, btnTamamla, btnSil, sonuc;
+
+      function listeyeEkle() {
+        girilen = document.getElementById("txtYapilacaklar").value;
+
+        if (girilen != "") {
+          eklenen = document.createElement("li");
+          document.getElementById("listeyapilacaklar").appendChild(eklenen);
+          eklenen.innerHTML = girilen;
+
+          btnTamamla = document.createElement("img");
+          eklenen.appendChild(btnTamamla);
+          btnTamamla.setAttribute("src", "check.png");
+          btnTamamla.addEventListener("click", tamamla);
+
+          btnSil = document.createElement("img");
+          eklenen.appendChild(btnSil);
+          btnSil.setAttribute("src", "cross.png");
+          btnTamamla.addEventListener("click", sil);
+          
+        } else alert("boş bırakılamaz");
+      }
+
+      function sil() {
+        secilen = event.currentTarget.parentNode;
+        secilen.remove();
+        document.getElementById("sonuc").innerHTML = "Seçiminiz silindi!";
+      }
+
+      function tamamla() {
+        eklenen = document.createElement("li");
+        document.getElementById("listeTamamlananlar").appendChild(eklenen);
+        secilen = event.currentTarget.parentNode;
+        secilen.childNodes[1].style.display = "none";
+        secilen.childNodes[2].setAttribute("onclick", "sil();");
+        eklenen.innerHTML = secilen.innerHTML;
+
+        sil();
+        document.getElementById("sonuc").innerHTML = "Seçiminiz taşındı!";
+      }
+    </script>
+  </body>
+</html>
